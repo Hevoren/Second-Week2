@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
+   <h2>Последние 10 объявлений</h2>
+<p>Вы посетили эту страницу {{ num_visits }}{% if num_visits == 1 %} time{% else %} time{% endif %}.</p>
+{% endblock %}
