@@ -1,6 +1,11 @@
 {% extends "base.html" %}
-
+{% block head %}
+{% endblock %}
 {% block content %}
-   <h2>Последние 10 объявлений</h2>
+<h1>Дизайн студия</h1>
+  <p>Колчество проектов</p>
+  <ul>
+    <li><strong>Заказ:</strong> {{ num_order }}</li>
+  </ul>
 <p>Вы посетили эту страницу {{ num_visits }}{% if num_visits == 1 %} time{% else %} time{% endif %}.</p>
 {% endblock %}
