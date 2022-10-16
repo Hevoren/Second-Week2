@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Заказы</h1>
+
+    {% if orderinstance_list %}
+    <ul>
+
+      {% for orderinst in orderinstance_list %}
+      <li class="{% if orderinst.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'order-detail' orderinst.order.pk %}">{{orderinst.order.name}}</a> ({{ orderinst.due_back }})
+      </li>
+      {% endfor %}
+    </ul>
+
+    {% else %}
+      <p>У вас нет заказов</p>
+    {% endif %}
+{% endblock %}
