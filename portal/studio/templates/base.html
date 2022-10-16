@@ -17,35 +17,18 @@
        <div class="nav-item dropdown">
            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Профиль</a>
            <div class="dropdown-menu">
-               <a class="dropdown-item" href="#">Мои объявления</a>
-               <a class="dropdown-item" href="#">Изменить личные данные</a>
-               <a class="dropdown-item" href="#">Изменить пароль</a>
+               <a class="dropdown-item" href="{% url 'profile' %}">Мои объявления</a>
                <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="#">Выйти</a>
-               <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="#">Удалить</a>
+               <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
            </div>
        </div>
-       <a class="p-2 text-dark" href="#">Регистрация</a>
+       <a class="p-2 text-dark" href="{% url 'register' %}">Регистрация</a>
        <a class="p-2 text-dark" href="{% url 'login' %}">Вход</a>
    </div>
    <div class="row">
 
        <nav class="col-md-auto nav flex-column">
            <a class="nav-link root" href="{% url 'index'  %}">Главная</a>
-           <span class="nav-link root font-weight-bold">
-               Недвижимость
-           </span>
-           <a class="nav-link" href="#">Жилье</a>
-           <a class="nav-link" href="#">Скалады</a>
-           <a class="nav-link" href="#">Квартиры</a>
-          
-           <span class="nav-link root font-weight-bold">
-               Транспорт
-           </span>
-           <a class="nav-link" href="#">Автомобили</a>
-           <a class="nav-link" href="#">Мото</a>
-           <a class="nav-link" href="#">Велосипеды</a>
        </nav>
 
        <div class="container">

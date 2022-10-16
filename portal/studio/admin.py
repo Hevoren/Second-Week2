@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Application, Category
+from .models import User, Order, Category
 
 
 # Register your models here.
@@ -11,7 +11,7 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(User, UserAdmin)
 
 
-@admin.register(Application)
+@admin.register(Order)
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = ('name', 'summary', 'category', 'photo_file')
 
