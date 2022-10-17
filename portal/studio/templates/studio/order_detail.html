@@ -3,18 +3,18 @@
 {% block content %}
   <h1>Заказ: {{ order.name }}</h1>
 
-  <p><strong>Заказчик:</strong> <a href="{% url 'order-detail' order.pk %}">{{ customer.name }}</a></p>
+  <p><strong>Заказчик:</strong> <a href="{% url 'order-detail' order.pk %}"></a>{{ user.name }}</p>
   <p><strong>Описание:</strong> {{ order.summary }}</p>
-  <p><strong>Категория:</strong> {% for category in order.category.all %} {{ category }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+  <p><strong>Категория:</strong> {% for category in category.all %} {{ category }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
 
   <div style="margin-left:20px;margin-top:20px">
-    <h4>Copies</h4>
+    <h4>Статус</h4>
 
     {% for copy in order_set.all %}
     <!-- итерации по каждой копии/экземпляру книги -->
     <hr>
     <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'c' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
-    {% if copy.status != 'c' %}<p><strong>Заказ выполнен:</strong> {{copy.due_back}}</p>{% endif %}
+    {% if copy.status != 'c' %}<p><strong>Заказ выполнен:</strong> {{copy.status}}</p>{% endif %}
     <p><strong>Описание:</strong> {{copy.summary}}</p>
     <p class="text-muted"><strong>Категория:</strong> {{copy.category}}</p>
     {% endfor %}

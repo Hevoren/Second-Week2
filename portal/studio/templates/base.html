@@ -8,44 +8,34 @@
    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='slim' %}
-   <title>{% block title %} Главная {% endblock %} - Электронная доска объявлений </title>
+   <title>{% block title %} Главная {% endblock %} - Дизайн студия </title>
 </head>
 <body>
 <div class="container-fluid">
    <div class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow">
-       <h5 class="mr-md-auto p-2">Электронная доска объявлений</h5>
-       <div class="nav-item dropdown">
-           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Профиль</a>
-           <div class="dropdown-menu">
-               <a class="dropdown-item" href="#">Мои объявления</a>
-               <a class="dropdown-item" href="#">Изменить личные данные</a>
-               <a class="dropdown-item" href="#">Изменить пароль</a>
-               <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="#">Выйти</a>
-               <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="#">Удалить</a>
-           </div>
-       </div>
-       <a class="p-2 text-dark" href="#">Регистрация</a>
-       <a class="p-2 text-dark" href="#">Вход</a>
+       <h5 class="mr-md-auto p-2">Дизайн студия</h5>
+       <a class="p-2 text-dark" href="{% url 'register'  %}">Регистрация</a>
+       <a class="p-2 text-dark" href="{% url 'login'%}?next={{request.path}}">Вход</a>
    </div>
    <div class="row">
 
        <nav class="col-md-auto nav flex-column">
            <a class="nav-link root" href="{% url 'index'  %}">Главная</a>
            <span class="nav-link root font-weight-bold">
-               Недвижимость
+               {% if user.is_authenticated %}
+               Пользователь: {{ user.get_username }}
            </span>
-           <a class="nav-link" href="#">Жилье</a>
-           <a class="nav-link" href="#">Скалады</a>
-           <a class="nav-link" href="#">Квартиры</a>
-
+           <a class="nav-link root" href="{% url 'my-order' %}">Мои заказы</a>
+           <a class="nav-link root" href="{% url 'order-create' %}">Создать заказ</a>
+           <a class="nav-link root" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
+           {% endif %}
+           {% if perms.catalog.can_mark_returned %}
            <span class="nav-link root font-weight-bold">
-               Транспорт
+               Админ
            </span>
-           <a class="nav-link" href="#">Автомобили</a>
-           <a class="nav-link" href="#">Мото</a>
-           <a class="nav-link" href="#">Велосипеды</a>
+           <a class="nav-link root" href="{% url 'all-order' %}">Все заказы</a>
+           <a class="nav-link root" href="#">Обновить заказ</a>
+           {% endif %}
        </nav>
 
        <div class="container">
@@ -57,8 +47,7 @@
    </div>
 
    <footer class="mt-3 border-top">
-       <small class="p-2"> &copy; Методическое пособие: Знакомство с фреймворком
-           Django. 2018-2019
+       <small class="p-2"> &copy; Дизайн студия
        </small>
    </footer>
 </div>

@@ -8,7 +8,7 @@
 
       {% for orderinst in orderinstance_list %}
       <li class="{% if orderinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'order-detail' orderinst.order.pk %}">{{orderinst.order.name}}</a> ({{ orderinst.due_back }})
+        <a href="{% url 'order-detail' orderinst.pk %}">{{orderinst.name}}</a> ({{ orderinst.summary }})
       </li>
       {% endfor %}
     </ul>

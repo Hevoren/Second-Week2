@@ -6,9 +6,9 @@
     {% if orderinstance_list %}
     <ul>
 
-      {% for orderinst in orderinstance_list %}
+      {% for order in orderinstance_list %}
       <li class="{% if orderinst.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'order-detail' orderinst.order.pk %}">{{orderinst.order.name}}</a> ({{ orderinst.due_back }}) {% if user.is_staff %}- {{ orderinst.customer }}{% endif %} {% if perms.studio.can_mark_returned %}- <a href="{% url 'create_order' orderinst.id %}">Создать</a>  {% endif %}
+        <a href="{% url 'order-detail' orderinst.order.pk %}">{{orderinst.order.name}}</a> {% if user.is_staff %}- {{ orderinst.customer_order }}{% endif %} {% if perms.studio.can_mark_returned %}- <a href="{% url 'order-update' orderinst.id %}"></a>  {% endif %}
       </li>
       {% endfor %}
     </ul>
