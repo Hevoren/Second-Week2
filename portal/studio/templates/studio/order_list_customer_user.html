@@ -1,8 +1,22 @@
 {% extends "base.html" %}
-
+{% load bootstrap4 %}
 {% block content %}
     <h1>Заказы</h1>
-
+    <p>
+        <div>Фильтр по статусу:</div>
+        {% if not request.GET.get %}
+        Все
+        {% else %}
+        <a href="{% url 'my-order' %}">Все</a>
+        {% endif %}
+{% for item in order_list %}
+{% if request.GET.get != item.pk %}
+<a href="{% url 'my-order'  %}{{ item.pk }}">{{item.status}}</a>
+  {% else %}
+        {{item.status}}
+{% endif %}
+{% endfor %}
+</p>
     {% if order_list %}
     <ul>
       {% for order in order_list %}

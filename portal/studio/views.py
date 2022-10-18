@@ -91,3 +91,14 @@ class RegisterUserView(CreateView):
 
 class RegisterDoneView(TemplateView):
     template_name = 'registration/register_done.html'
+
+
+def status(request):
+    status = request.GET.get('status')
+    if status:
+        order = Order.objects.filter(status=status)
+    else:
+        order = Order.objects.all()
+    return render(request, 'studio/order_list_customer_all.html', context={
+        'status': Order.objects.all()
+    })
