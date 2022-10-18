@@ -142,5 +142,5 @@ THUMBNAIL_ALIASES = {
    },
 }
 
-THUMBNAIL_BASEDIR = 'media'
+THUMBNAIL_BASEDIR = 'thumbnails'
 
