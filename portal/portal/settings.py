@@ -136,11 +136,9 @@ MEDIA_URL = 'media/'
 THUMBNAIL_ALIASES = {
    '': {
        'default': {
-           'size': (96, 96),
+           'size': (426, 240),
            'crop': 'scale',
        },
    },
 }
-
-THUMBNAIL_BASEDIR = 'thumbnails'
 

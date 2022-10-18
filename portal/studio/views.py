@@ -3,14 +3,11 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
-from .forms import RegisterUserForm, RegisterOrderForm
+from .forms import RegisterUserForm
 from django.urls import reverse_lazy
 from .models import User, Order
 from django.views.generic.base import TemplateView
 from django.views import generic
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 
 # Create your views here.
@@ -42,7 +39,7 @@ class LoanedOrdersByUserListView(LoginRequiredMixin, generic.ListView):
 
 class LoanedOrdersAllListView(PermissionRequiredMixin, generic.ListView):
     model = Order
-    permission_required = 'catalog.can_mark_returned'
+    permission_required = 'studio.can_mark_returned'
     template_name = 'studio/order_list_customer_all.html'
     paginate_by = 10
 
@@ -62,7 +59,7 @@ class OrderCreate(CreateView):
 class OrderUpdate(UpdateView):
     model = Order
     fields = ['status']
-    permission_required = 'catalog.can_mark_returned'
+    permission_required = 'studio.can_mark_returned'
 
 
 class OrderUserDelete(DeleteView):
@@ -73,7 +70,7 @@ class OrderUserDelete(DeleteView):
 class OrderAdminDelete(PermissionRequiredMixin, DeleteView):
     model = Order
     success_url = reverse_lazy('all-order')
-    permission_required = 'catalog.can_mark_returned'
+    permission_required = 'studio.can_mark_returned'
 
 
 class StudioLoginView(LoginView):

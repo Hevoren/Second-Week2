@@ -21,17 +21,17 @@
 
        <nav class="col-md-auto nav flex-column">
            <a class="nav-link root" href="{% url 'index'  %}">Главная</a>
+           {% if user.is_authenticated and not user.is_staff %}
            <span class="nav-link root font-weight-bold">
-               {% if user.is_authenticated %}
                Пользователь: {{ user.get_username }}
            </span>
            <a class="nav-link root" href="{% url 'my-order' %}">Мои заказы</a>
            <a class="nav-link root" href="{% url 'order-create' %}">Создать заказ</a>
            <a class="nav-link root" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
            {% endif %}
-           {% if perms.catalog.can_mark_returned %}
+           {% if perms.studio.can_mark_returned %}
            <span class="nav-link root font-weight-bold">
-               Админ
+               Админ {{ user.get_username }}
            </span>
            <a class="nav-link root" href="{% url 'all-order' %}">Все заказы</a>
            <a class="nav-link root" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
