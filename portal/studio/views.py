@@ -15,11 +15,12 @@ import datetime
 
 
 def index(request):
-    num_order = Order.objects.filter(status='c')[:4]
+    num_order = Order.objects.filter(status__exact='c')[:4]
+    num_status = Order.objects.filter(status__exact='a').count()
     return render(
         request,
         'index.html',
-        context={'num_order': num_order},
+        context={'num_order': num_order, 'num_status': num_status},
     )
 
 

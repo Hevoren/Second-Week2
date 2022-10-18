@@ -4,17 +4,42 @@ from django.dispatch import Signal
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.core.validators import FileExtensionValidator
+from django.core.validators import RegexValidator
 
 
 # Create your models here.
 
 
 class User(AbstractUser):
-    name = models.CharField(max_length=200, verbose_name='Имя', blank=False)
-    surname = models.CharField(max_length=200, verbose_name='Фамилия', blank=False)
-    patronymic = models.CharField(max_length=200, verbose_name='Отчество', blank=True)
-    username = models.CharField(max_length=200, verbose_name='Логин', unique=True, blank=False)
-    email = models.CharField(max_length=200, verbose_name='Почта', unique=True, blank=False)
+    name = models.CharField(max_length=200, verbose_name='Имя', blank=False, validators=[
+        RegexValidator(
+            regex='^[А-Яа-я -]*$',
+            message='Имя пользователя должно состоять из кириллицы',
+            code='invalid_username'
+        ),
+    ])
+    surname = models.CharField(max_length=200, verbose_name='Фамилия', blank=False, validators=[
+        RegexValidator(
+            regex='^[А-Яа-я -]*$',
+            message='Фамилия пользователя должно состоять из кириллицы',
+            code='invalid_username'
+        ),
+    ])
+    patronymic = models.CharField(max_length=200, verbose_name='Отчество', blank=True, validators=[
+        RegexValidator(
+            regex='^[А-Яа-я -]*$',
+            message='Отчество пользователя должно состоять из кириллицы',
+            code='invalid_username'
+        ),
+    ])
+    username = models.CharField(max_length=200, verbose_name='Логин', unique=True, blank=False, validators=[
+        RegexValidator(
+            regex='^[A-Za-z -]*$',
+            message='Имя пользователя должно состоять только из латиницы',
+            code='invalid_username'
+        ),
+    ])
+    email = models.EmailField(max_length=200, verbose_name='Почта', unique=True, blank=False)
     password = models.CharField(max_length=200, verbose_name='Пароль', blank=False)
     role = models.CharField(max_length=200, verbose_name='Роль',
                             choices=(('admin', 'Администратор'), ('user', 'Пользователь')), default='user')
@@ -41,9 +66,9 @@ class Category(models.Model):
 class Order(models.Model):
     day_add = models.DateField(null=True, blank=True)
     name = models.CharField(max_length=200, verbose_name='Имя', blank=False)
-    summary = models.TextField(max_length=1000, help_text="Описание")
-    category = models.ForeignKey('category', help_text="Выбор категории", on_delete=models.CASCADE)
-    photo_file = models.ImageField(max_length=200, upload_to=get_name_file, blank=True, null=True,
+    summary = models.TextField(max_length=1000, help_text="Описание", blank=False)
+    category = models.ForeignKey('category', help_text="Выбор категории", on_delete=models.CASCADE, blank=False)
+    photo_file = models.ImageField(max_length=200, upload_to=get_name_file, blank=False, null=True,
                                    validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
     customer_order = models.ForeignKey('user', on_delete=models.SET_NULL, null=True, blank=True)
     LOAN_STATUS = (
