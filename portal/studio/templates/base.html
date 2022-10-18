@@ -34,7 +34,7 @@
                Админ
            </span>
            <a class="nav-link root" href="{% url 'all-order' %}">Все заказы</a>
-           <a class="nav-link root" href="#">Обновить заказ</a>
+           <a class="nav-link root" href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
            {% endif %}
        </nav>
 

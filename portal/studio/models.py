@@ -1,10 +1,9 @@
-import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.dispatch import Signal
 from django.urls import reverse
 from django.utils.crypto import get_random_string
 from django.core.validators import FileExtensionValidator
-from django.dispatch import Signal
 
 
 # Create your models here.
@@ -28,7 +27,6 @@ class User(AbstractUser):
         ordering = ['name']
 
 
-# Заявки
 def get_name_file(instance, filename):
     return 'portal/file'.join([get_random_string(5) + '_' + filename])
 
@@ -46,7 +44,6 @@ class Order(models.Model):
     category = models.ForeignKey('category', help_text="Выбор категории", on_delete=models.CASCADE)
     photo_file = models.ImageField(max_length=200, upload_to=get_name_file, blank=True, null=True,
                                    validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
-
     customer_order = models.ForeignKey('user', on_delete=models.SET_NULL, null=True, blank=True)
     LOAN_STATUS = (
         ('n', 'Новая'),
@@ -54,17 +51,17 @@ class Order(models.Model):
         ('c', 'Выполнено'),
     )
 
-    status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='n', help_text='Статус заказа')
-
-    class Meta:
-        ordering = ["status"]
-        permissions = (("can_mark_returned", "Установите статус заказа"),)
+    status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='n')
 
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):  # new
         return reverse('order-detail', args=[str(self.id)])
+
+    class Meta:
+        ordering = ["status"]
+        permissions = (("can_mark_returned", "Установите статус заказа"),)
 
 
 user_registrated = Signal()

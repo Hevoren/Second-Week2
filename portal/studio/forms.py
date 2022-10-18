@@ -45,7 +45,6 @@ class RegisterUserForm(forms.ModelForm):
         fields = ('username', 'email', 'password1', 'password2',
                   'name', 'surname', 'patronymic')
 
+
 class RegisterOrderForm(forms.ModelForm):
     pass
-
-
