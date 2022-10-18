@@ -4,11 +4,13 @@
 {% load bootstrap4 %}
 {% block content %}
   <h1>Заказ: {{ order.name }}</h1>
-
+  <p><strong>Время создания заказа:</strong> {{ order.day_add}}</p>
   <p><strong>Заказчик:</strong> {{ order.customer_order}}</p>
   <p><strong>Описание:</strong> {{ order.summary }}</p>
   <p><strong>Категория:</strong> {{ order.category }}</p>
   <p><strong>Статус:</strong> {{ order.status }}</p>
   <p><strong>Фото:</strong> <img class="mr-3" src="{% thumbnail order.photo_file 'default' %}"></p>
+{% if  order.status != 'a' and order.status != 'c' %}
   <p><a href="{% url 'order-delete' order.pk %}">Удалить заказ</a></p>
+{% endif %}
 {% endblock %}

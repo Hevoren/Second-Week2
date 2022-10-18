@@ -8,19 +8,18 @@ from django.urls import reverse_lazy
 from .models import User, Order
 from django.views.generic.base import TemplateView
 from django.views import generic
+import datetime
 
 
 # Create your views here.
 
 
 def index(request):
-    num_order = Order.objects.all().count()
-    num_visits = request.session.get('num_visits', 0)
-    request.session['num_visits'] = num_visits + 1
+    num_order = Order.objects.filter(status='c')[:4]
     return render(
         request,
         'index.html',
-        context={'num_order': num_order, 'num_visits': num_visits},
+        context={'num_order': num_order},
     )
 
 
@@ -53,6 +52,7 @@ class OrderCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.customer_order = self.request.user
+        form.instance.day_add = datetime.date.today()
         return super().form_valid(form)
 
 

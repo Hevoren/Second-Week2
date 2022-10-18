@@ -39,6 +39,7 @@ class Category(models.Model):
 
 
 class Order(models.Model):
+    day_add = models.DateField(null=True, blank=True)
     name = models.CharField(max_length=200, verbose_name='Имя', blank=False)
     summary = models.TextField(max_length=1000, help_text="Описание")
     category = models.ForeignKey('category', help_text="Выбор категории", on_delete=models.CASCADE)

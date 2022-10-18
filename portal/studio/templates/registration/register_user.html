@@ -9,6 +9,7 @@
    <form method="post">
        {% csrf_token %}
        {% bootstrap_form form layout='horizontal' %}
+       <p><input type="checkbox" required> Согласие на обработку персональных данных</p>
        {% buttons submit='Зарегистрироваться' %} {% endbuttons %}
    </form>
 {% endblock %}
