@@ -9,17 +9,10 @@ class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True,
                              label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль',
-                                widget=forms.PasswordInput,
-                                help_text=password_validation.password_validators_help_text_html())
+                                widget=forms.PasswordInput,)
     password2 = forms.CharField(label='Пароль (повторно)',
                                 widget=forms.PasswordInput,
                                 help_text='Повторите тот же самый пароль еще раз')
-
-    def clean_password1(self):
-        password1 = self.cleaned_data['password1']
-        if password1:
-            password_validation.validate_password(password1)
-        return password1
 
     def clean(self):
         super().clean()
