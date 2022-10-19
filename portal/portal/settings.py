@@ -134,11 +134,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = 'media/'
 
 THUMBNAIL_ALIASES = {
-   '': {
-       'default': {
-           'size': (426, 240),
-           'crop': 'scale',
-       },
-   },
+    '': {
+        'default': {
+            'size': (426, 240),
+            'crop': 'scale',
+        },
+        'index': {
+            'size': (96, 96),
+            'crop': 'scale',
+        },
+    }
 }
-

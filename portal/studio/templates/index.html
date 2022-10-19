@@ -1,11 +1,16 @@
 {% extends "base.html" %}
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
 {% block head %}
 {% endblock %}
 {% block content %}
 <h1>Дизайн студия</h1>
   <p>Колчество проектов</p>
   <ul>
-    <li>{{ num_order }}</li>
+    {% for order in num_order %}
+    <li>{{ order.day_add }} {{ order.name }} ({{ order.category}}) <img class="mr-3" src="{% thumbnail order.photo_file 'index' %}"></li>
+    {% endfor %}
   </ul>
 <p>Количество принятых проектов: {{ num_status }}</p>
 {% endblock %}

@@ -94,7 +94,7 @@ class RegisterDoneView(TemplateView):
 
 
 def status(request):
-    status = request.GET.get('status')
+    status_filter = request.GET.get('status')
     if status:
         order = Order.objects.filter(status=status)
     else:
