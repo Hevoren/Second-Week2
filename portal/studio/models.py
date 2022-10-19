@@ -71,7 +71,7 @@ class Order(models.Model):
     photo_file = models.ImageField(max_length=200, upload_to=get_name_file, blank=False, null=True,
                                    validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
     customer_order = models.ForeignKey('user', on_delete=models.SET_NULL, null=True, blank=True)
-    comment = models.TextField(max_length=1000, help_text="Комментарий", blank=True)
+    comment = models.TextField(max_length=1000, help_text="Комментарий", blank=True,  null=True)
     img = models.ImageField(max_length=200, upload_to=get_name_file, blank=True, null=True,
                                    validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
     LOAN_STATUS = (

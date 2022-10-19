@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.views.generic import CreateView, UpdateView, DeleteView
-from .forms import RegisterUserForm
+from .forms import RegisterUserForm, UpdateOrderForm
 from django.urls import reverse_lazy
 from .models import User, Order
 from django.views.generic.base import TemplateView
@@ -91,7 +91,7 @@ class OrderCreate(CreateView):
 
 class OrderUpdate(UpdateView):
     model = Order
-    fields = ['status', 'img', 'comment']
+    form_class = UpdateOrderForm
     permission_required = 'studio.can_mark_returned'
 
 

@@ -10,11 +10,11 @@
     <a href="{% url 'my-order' %}">Все</a>
 {% endif %}
 {% for item in status_list %}
-    {% ifnotequal request.GET.status item.0 %}
+    {% if request.GET.status != item.0 %}
         <a href="{% url 'my-order' %}?status={{item.0}}">{{item.1}}</a>
     {% else %}
     {{item.status}}
-    {% endifnotequal %}
+    {% endif %}
 {% endfor %}
 </p>
 {% if order_list %}

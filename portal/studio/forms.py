@@ -1,7 +1,6 @@
 from django import forms
-from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
-from .models import User
+from .models import User, Order
 from .models import user_registrated
 
 
@@ -9,7 +8,7 @@ class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True,
                              label='Адрес электронной почты')
     password1 = forms.CharField(label='Пароль',
-                                widget=forms.PasswordInput,)
+                                widget=forms.PasswordInput, )
     password2 = forms.CharField(label='Пароль (повторно)',
                                 widget=forms.PasswordInput,
                                 help_text='Повторите тот же самый пароль еще раз')
@@ -37,3 +36,33 @@ class RegisterUserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2',
                   'name', 'surname', 'patronymic')
+
+
+class UpdateOrderForm(forms.ModelForm):
+    status = forms.CharField(label='Статус заявки')
+    img = forms.ImageField(label='Фото работы')
+    comment = forms.CharField(label='Комментарий')
+
+    def clean(self):
+        super().clean()
+        self.status = self.cleaned_data['status']
+        self.comment = self.cleaned_data['comment']
+        if self.status == 'a' and self.comment is None:
+            errors = {'status': ValidationError(
+                'После изменения статуса на принят в работу нужно добавить комментарий'
+            )}
+            raise ValidationError(errors)
+        elif self.status == 'с' and self.img is None:
+            errors = {'status': ValidationError(
+                'После изменения статуса на выполнено нужно добавить фото'
+            )}
+            raise ValidationError(errors)
+        elif self.status == 'n':
+            errors = {'status': ValidationError(
+                'Вы не можете изменить статус на новый'
+            )}
+            raise ValidationError(errors)
+
+    class Meta:
+        model = Order
+        fields = ('status', 'img', 'comment')
