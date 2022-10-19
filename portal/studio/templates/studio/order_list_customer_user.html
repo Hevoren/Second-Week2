@@ -9,9 +9,9 @@
 {% else %}
     <a href="{% url 'my-order' %}">Все</a>
 {% endif %}
-{% for item in order_list %}
-    {% ifnotequal request.GET.status item.status %}
-        <a href="{% url 'my-order' %}?status={{item.status}}">{{item.status}}</a>
+{% for item in status_list %}
+    {% ifnotequal request.GET.status item.0 %}
+        <a href="{% url 'my-order' %}?status={{item.0}}">{{item.1}}</a>
     {% else %}
     {{item.status}}
     {% endifnotequal %}
@@ -21,7 +21,7 @@
 <ul>
     {% for order in order_list %}
     <li class="{% if order.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'order-detail' order.pk %}">{{order.name}}</a> ({{ order.summary }} -- Статус: {{order.status}})
+        <a href="{% url 'order-detail' order.pk %}">{{order.name}}</a> ({{ order.summary }} -- Статус: {{order.get_status_name}})
     </li>
     {% endfor %}
 </ul>

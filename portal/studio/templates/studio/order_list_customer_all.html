@@ -8,7 +8,7 @@
 
       {% for order in order_list %}
       <li class="{% if order.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'order-detail' order.pk %}">{{order.name}}</a> {% if user.is_staff %}- Заказчик:{{ order.customer_order }} (Статус: {{ order.status }}) {% endif %} {% if perms.studio.can_mark_returned %}- <a href="{% url 'order-update' order.id %}">Обновить статус</a>  {% endif %}
+        <a href="{% url 'order-detail' order.pk %}">{{order.name}}</a> {% if user.is_staff %}- Заказчик:{{ order.customer_order }} (Статус: {{ order.get_status_name }}) {% endif %} {% if perms.studio.can_mark_returned %}- <a href="{% url 'order-update' order.id %}">Обновить статус</a>  {% endif %}
       </li>
       {% endfor %}
     </ul>

@@ -79,6 +79,12 @@ class Order(models.Model):
 
     status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='n')
 
+    def get_status_name(self):
+        for status in self.LOAN_STATUS:
+            if status[0] == self.status:
+                return status[1]
+        return 'Не задан'
+
     def __str__(self):
         return self.name
 

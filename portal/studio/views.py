@@ -40,6 +40,14 @@ class LoanedOrdersByUserListView(LoginRequiredMixin, generic.ListView):
             self.status = request.GET.get('status')
         return super().get(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        # В первую очередь получаем базовую реализацию контекста
+        context = super(LoanedOrdersByUserListView, self).get_context_data(**kwargs)
+        # Добавляем новую переменную к контексту и инициализируем её некоторым значением
+        context['status_list'] = Order.LOAN_STATUS
+        print(Order.LOAN_STATUS)
+        return context
+
     def get_queryset(self):
         if self.status:
             return Order.objects.filter(customer_order=self.request.user, status=self.status)
@@ -51,6 +59,21 @@ class LoanedOrdersAllListView(PermissionRequiredMixin, generic.ListView):
     permission_required = 'studio.can_mark_returned'
     template_name = 'studio/order_list_customer_all.html'
     paginate_by = 10
+    status = None
+
+    def get(self, request, *args, **kwargs):
+        print(request.GET.get('status'))
+        if request.GET.get('status'):
+            self.status = request.GET.get('status')
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        # В первую очередь получаем базовую реализацию контекста
+        context = super(LoanedOrdersAllListView, self).get_context_data(**kwargs)
+        # Добавляем новую переменную к контексту и инициализируем её некоторым значением
+        context['status_list'] = Order.LOAN_STATUS
+        print(Order.LOAN_STATUS)
+        return context
 
     def get_queryset(self):
         return Order.objects.all()
