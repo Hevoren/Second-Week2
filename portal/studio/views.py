@@ -32,9 +32,18 @@ class LoanedOrdersByUserListView(LoginRequiredMixin, generic.ListView):
     model = Order
     template_name = 'studio/order_list_customer_user.html'
     paginate_by = 10
+    status = None
+
+    def get(self, request, *args, **kwargs):
+        print(request.GET.get('status'))
+        if request.GET.get('status'):
+            self.status = request.GET.get('status')
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        return Order.objects.filter(customer_order=self.request.user)
+        if self.status:
+            return Order.objects.filter(customer_order=self.request.user, status=self.status)
+        return Order.objects.filter(customer_order=self.request.user).order_by('-day_add')
 
 
 class LoanedOrdersAllListView(PermissionRequiredMixin, generic.ListView):
@@ -96,9 +105,15 @@ class RegisterDoneView(TemplateView):
 def status(request):
     status_filter = request.GET.get('status')
     if status:
-        order = Order.objects.filter(status=status)
+        order = Order.objects.filter(status=status_filter)
     else:
         order = Order.objects.all()
+    order_by = request.GET.get('order')
+    if order_by:
+        order = order.order_by(order_by)
+    else:
+        order = order.order_by(order_by)
     return render(request, 'studio/order_list_customer_all.html', context={
-        'status': Order.objects.all()
+        'order': Order.objects.all(),
+        'status': order
     })
