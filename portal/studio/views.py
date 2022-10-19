@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -35,7 +35,7 @@ class LoanedOrdersByUserListView(LoginRequiredMixin, generic.ListView):
     status = None
 
     def get(self, request, *args, **kwargs):
-        print(request.GET.get('status'))
+        # print(request.GET.get('status'))
         if request.GET.get('status'):
             self.status = request.GET.get('status')
         return super().get(request, *args, **kwargs)
@@ -45,7 +45,7 @@ class LoanedOrdersByUserListView(LoginRequiredMixin, generic.ListView):
         context = super(LoanedOrdersByUserListView, self).get_context_data(**kwargs)
         # Добавляем новую переменную к контексту и инициализируем её некоторым значением
         context['status_list'] = Order.LOAN_STATUS
-        print(Order.LOAN_STATUS)
+        # print(Order.LOAN_STATUS)
         return context
 
     def get_queryset(self):
@@ -62,7 +62,7 @@ class LoanedOrdersAllListView(PermissionRequiredMixin, generic.ListView):
     status = None
 
     def get(self, request, *args, **kwargs):
-        print(request.GET.get('status'))
+        # print(request.GET.get('status'))
         if request.GET.get('status'):
             self.status = request.GET.get('status')
         return super().get(request, *args, **kwargs)
@@ -72,7 +72,7 @@ class LoanedOrdersAllListView(PermissionRequiredMixin, generic.ListView):
         context = super(LoanedOrdersAllListView, self).get_context_data(**kwargs)
         # Добавляем новую переменную к контексту и инициализируем её некоторым значением
         context['status_list'] = Order.LOAN_STATUS
-        print(Order.LOAN_STATUS)
+        # print(Order.LOAN_STATUS)
         return context
 
     def get_queryset(self):
@@ -91,13 +91,18 @@ class OrderCreate(CreateView):
 
 class OrderUpdate(UpdateView):
     model = Order
-    fields = ['status']
+    fields = ['status', 'img', 'comment']
     permission_required = 'studio.can_mark_returned'
 
 
 class OrderUserDelete(DeleteView):
     model = Order
     success_url = reverse_lazy('my-order')
+
+    def get(self, request, *args, **kwargs):
+        if self.get_object().status == 'n':
+            return super().get(request, *args, **kwargs)
+        return redirect('my-order')
 
 
 class OrderAdminDelete(PermissionRequiredMixin, DeleteView):
@@ -123,20 +128,3 @@ class RegisterUserView(CreateView):
 
 class RegisterDoneView(TemplateView):
     template_name = 'registration/register_done.html'
-
-
-def status(request):
-    status_filter = request.GET.get('status')
-    if status:
-        order = Order.objects.filter(status=status_filter)
-    else:
-        order = Order.objects.all()
-    order_by = request.GET.get('order')
-    if order_by:
-        order = order.order_by(order_by)
-    else:
-        order = order.order_by(order_by)
-    return render(request, 'studio/order_list_customer_all.html', context={
-        'order': Order.objects.all(),
-        'status': order
-    })

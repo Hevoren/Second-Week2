@@ -14,7 +14,7 @@ admin.site.register(User, UserAdmin)
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('name', 'summary', 'category', 'photo_file')
+    list_display = ('name', 'summary', 'category', 'photo_file', 'comment')
 
 
 @admin.register(Category)

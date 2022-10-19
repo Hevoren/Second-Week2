@@ -14,8 +14,10 @@
 <div class="container-fluid">
    <div class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow">
        <h5 class="mr-md-auto p-2">Дизайн студия</h5>
+       {% if not user.is_authenticated %}
        <a class="p-2 text-dark" href="{% url 'register'  %}">Регистрация</a>
        <a class="p-2 text-dark" href="{% url 'login'%}?next={{request.path}}">Вход</a>
+       {% endif %}
    </div>
    <div class="row">
 
