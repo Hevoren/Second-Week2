@@ -47,6 +47,7 @@ class UpdateOrderForm(forms.ModelForm):
         super().clean()
         self.status = self.cleaned_data['status']
         self.comment = self.cleaned_data['comment']
+        self.img = self.cleaned_data['img']
         if self.status == 'a' and self.comment is None:
             errors = {'status': ValidationError(
                 'После изменения статуса на принят в работу нужно добавить комментарий'
