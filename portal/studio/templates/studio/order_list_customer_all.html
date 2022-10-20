@@ -1,19 +1,18 @@
 {% extends "base.html" %}
-
+{% load static %}
+{% load bootstrap4 %}
 {% block content %}
     <h1>Все заказы</h1>
-
     {% if order_list %}
-    <ul>
-
+<div class="d-flex flex-column">
       {% for order in order_list %}
-      <li class="{% if order.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'order-detail' order.pk %}">{{order.name}}</a> {% if user.is_staff %}- Заказчик:{{ order.customer_order }} (Статус: {{ order.get_status_name }}) {% endif %} {% if perms.studio.can_mark_returned %}- <a href="{% url 'order-update' order.id %}">Обновить статус</a>  {% endif %}
-      </li>
+      <div class="{% if order.is_overdue %}text-danger{% endif %}">
+        <a href="{% url 'order-detail' order.pk %}">{{order.name}}</a> {% if user.is_staff %}- Заказчик:{{ order.customer_order }}
+          <div>Статус: {{ order.get_status_name }} {% endif %} {% if perms.studio.can_mark_returned %}- <a href="{% url 'order-update' order.id %}">Обновить статус</a></div>  {% endif %}
+      </div><br>
       {% endfor %}
-    </ul>
-
+</div>
     {% else %}
-      <p>Заказов нет</p>
-    {% endif %}       
+<p>Заказов нет</p>
+{% endif %}
 {% endblock %}

@@ -1,30 +1,32 @@
 {% extends "base.html" %}
+{% load static %}
 {% load bootstrap4 %}
 {% block content %}
-<h1>Заказы</h1>
+<h1>Мои заказы</h1>
 <p>
 <div>Фильтр по статусу:</div>
 {% if not request.GET.status %}
-    Все
+<span>Все</span>
 {% else %}
     <a href="{% url 'my-order' %}">Все</a>
 {% endif %}
 {% for item in status_list %}
     {% if request.GET.status != item.0 %}
-        <a href="{% url 'my-order' %}?status={{item.0}}">{{item.1}}</a>
+        <a href="{% url 'my-order' %}?status={{item.0}}"> {{item.1}} </a>
     {% else %}
     {{item.status}}
     {% endif %}
 {% endfor %}
 </p>
 {% if order_list %}
-<ul>
+<div class="d-flex flex-column">
     {% for order in order_list %}
-    <li class="{% if order.is_overdue %}text-danger{% endif %}">
-        <a href="{% url 'order-detail' order.pk %}">{{order.name}}</a> ({{ order.summary }} -- Статус: {{order.get_status_name}})
-    </li>
+    <div class="{% if order.is_overdue %}text-danger{% endif %}">
+        <div>Название: <a href="{% url 'order-detail' order.pk %}">{{order.name}} </a></div>
+        <div><span class="font-weight-bold">Статус:</span> {{order.get_status_name}}</div><br>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% else %}
 <p>У вас нет заказов</p>
 {% endif %}

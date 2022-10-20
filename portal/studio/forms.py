@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.messages import debug
 from django.core.exceptions import ValidationError
 from .models import User, Order
 from .models import user_registrated
@@ -40,25 +41,27 @@ class RegisterUserForm(forms.ModelForm):
 
 class UpdateOrderForm(forms.ModelForm):
     status = forms.CharField(label='Статус заявки')
-    img = forms.ImageField(label='Фото работы')
-    comment = forms.CharField(label='Комментарий')
+    img = forms.ImageField(label='Фото работы', required=False)
+    comment = forms.CharField(label='Комментарий', required=False)
 
     def clean(self):
         super().clean()
-        self.status = self.cleaned_data['status']
-        self.comment = self.cleaned_data['comment']
-        self.img = self.cleaned_data['img']
-        if self.status == 'a' and self.comment is None:
+        print(self.cleaned_data)
+
+        status = self.cleaned_data.get('status')
+        comment = self.cleaned_data.get('comment')
+        img = self.cleaned_data.get('img')
+        if status == 'a' and comment == '':
             errors = {'status': ValidationError(
                 'После изменения статуса на принят в работу нужно добавить комментарий'
             )}
             raise ValidationError(errors)
-        elif self.status == 'с' and self.img is None:
+        elif status == 'c' and img is None:
             errors = {'status': ValidationError(
                 'После изменения статуса на выполнено нужно добавить фото'
             )}
             raise ValidationError(errors)
-        elif self.status == 'n':
+        elif status == 'n':
             errors = {'status': ValidationError(
                 'Вы не можете изменить статус на новый'
             )}

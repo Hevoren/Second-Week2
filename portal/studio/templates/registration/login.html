@@ -1,11 +1,8 @@
 {% extends "base.html" %}
-
 {% block content %}
-
   {% if form.errors %}
     <p>Ваше имя пользователя и пароль не совпадают. Пожалуйста, попробуйте еще раз.</p>
   {% endif %}
-
   {% if next %}
     {% if user.is_authenticated %}
       <p>У вашего аккаунта нет доступа к этой странице. Продолжать,
@@ -14,7 +11,6 @@
       <p>Пожалуйста, войдите, чтобы увидеть эту страницу.</p>
     {% endif %}
   {% endif %}
-
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>
@@ -27,7 +23,7 @@
         <td>{{ form.password }}</td>
       </tr>
     </table>
-    <input type="submit" value="login">
+    <input type="submit" value="Вход">
     <input type="hidden" name="next" value="{{ next }}">
   </form>
 {% endblock %}

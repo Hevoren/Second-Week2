@@ -9,14 +9,14 @@
   <p><strong>Описание:</strong> {{ order.summary }}</p>
   <p><strong>Категория:</strong> {{ order.category }}</p>
   <p><strong>Статус:</strong> {{ order.get_status_name }}</p>
-  <p><strong>Результат:</strong> <img class="mr-3" src="{% thumbnail order.photo_file 'default' %}"></p>
+  <p><strong>Фото:</strong> <img class="mr-3" src="{% thumbnail order.photo_file 'index' %}"></p>
   {% if  order.status == 'a' %}
     <p><strong>Коментарий:</strong> {{ order.comment }}</p>
 {% endif %}
  {% if  order.status == 'c' %}
- <p><strong>Фото:</strong> <img class="mr-3" src="{% thumbnail order.img 'default' %}"></p>
+ <p><strong>Результат:</strong> <img class="mr-3" src="{% thumbnail order.img 'index' %}"></p>
 {% endif %}
 {% if  order.status != 'a' and order.status != 'c' %}
   <p><a href="{% url 'order-delete' order.pk %}">Удалить заказ</a></p>
 {% endif %}
-{% endblock %}
+{% endblock %}ф
