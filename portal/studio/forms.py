@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.messages import debug
 from django.core.exceptions import ValidationError
+from django.forms import TextInput
+
 from .models import User, Order
 from .models import user_registrated
 
@@ -40,7 +42,12 @@ class RegisterUserForm(forms.ModelForm):
 
 
 class UpdateOrderForm(forms.ModelForm):
-    status = forms.CharField(label='Статус заявки', help_text='Статус')
+    LOAN_STATUS = (
+        ('n', 'Новая'),
+        ('a', 'Принято в работу'),
+        ('c', 'Выполнено'),
+    )
+    status = forms.ChoiceField(label='Статус заявки', help_text='Статус', widget=forms.Select, choices=LOAN_STATUS)
     img = forms.ImageField(label='Фото работы', required=False)
     comment = forms.CharField(label='Комментарий', required=False, help_text='Комментарий')
 
