@@ -94,6 +94,10 @@ class OrderUpdate(UpdateView):
     form_class = UpdateOrderForm
     permission_required = 'studio.can_mark_returned'
 
+    def post(self, request, *args, **kwargs):
+        print(request)
+        return super().post(request, *args, **kwargs)
+
 
 class OrderUserDelete(DeleteView):
     model = Order
@@ -123,8 +127,7 @@ class RegisterUserView(CreateView):
     model = User
     template_name = 'registration/register_user.html'
     form_class = RegisterUserForm
-    success_url = reverse_lazy('register_done')
+    success_url = reverse_lazy('index')
 
-
-class RegisterDoneView(TemplateView):
-    template_name = 'registration/register_done.html'
+# class RegisterDoneView(TemplateView):
+#     template_name = 'registration/register_done.html'

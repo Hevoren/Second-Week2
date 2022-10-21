@@ -40,9 +40,9 @@ class RegisterUserForm(forms.ModelForm):
 
 
 class UpdateOrderForm(forms.ModelForm):
-    status = forms.CharField(label='Статус заявки')
+    status = forms.CharField(label='Статус заявки', help_text='Статус')
     img = forms.ImageField(label='Фото работы', required=False)
-    comment = forms.CharField(label='Комментарий', required=False)
+    comment = forms.CharField(label='Комментарий', required=False, help_text='Комментарий')
 
     def clean(self):
         super().clean()
