@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'studio.apps.StudioConfig',
     'bootstrap4',
     'django_cleanup',
-    'easy_thumbnails'
+    'easy_thumbnails',
+    'django_mptt_admin',
 ]
 
 MIDDLEWARE = [

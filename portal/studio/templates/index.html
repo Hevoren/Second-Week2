@@ -6,11 +6,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" media="screen" type="text/css" href="{% static 'css/style.css' %}">
-    <title>Дизайн студия</title>
+    <title>Music instruments</title>
 </head>
 <body>
 <header>
-    <h2>Дизайн студия</h2>
+    <h2>Music instruments</h2>
     <span class="user">
              Пользователь: {{ user.get_username }}
             </span>
@@ -30,6 +30,9 @@
             <a href="{% url 'order-create' %}">Создать заказ</a>
             <a href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
             {% endif %}
+            {% if user.is_staff %}
+            <a href="{% url 'category-list' %}">Категория</a>
+            {% endif %}
             {% if perms.studio.can_mark_returned %}
             <a href="{% url 'all-order' %}">Все заказы</a>
             <a href="{% url 'logout'%}?next={{request.path}}">Выйти</a>
@@ -41,7 +44,7 @@
             <div class="info_index">
                 <img src="{% thumbnail order.photo_file 'index' %}" alt="Картинка">
                 <div class="info_text">
-                    <h3>Кирпич</h3>
+                    <h3>Инструмент</h3>
                     <p>Дата заказа: {{ order.day_add }}</p>
                     <p>Категория: {{ order.category}}</p>
                 </div>

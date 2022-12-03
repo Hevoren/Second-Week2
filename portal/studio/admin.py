@@ -1,8 +1,14 @@
 from django.contrib import admin
 from .models import User, Order, Category
+from django.contrib import admin
+from mptt.admin import MPTTModelAdmin
+from .models import Post, Category
+from django.contrib import admin
+from django_mptt_admin.admin import DjangoMpttAdmin
+from .models import Post, Category
 
 
-# Register your models here.
+
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -17,6 +23,17 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('name', 'summary', 'category', 'photo_file', 'comment')
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    model = Category
+
+
+class PostAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+
+
+admin.site.register(Post, PostAdmin)
+
+
+class CategoryAdmin(DjangoMpttAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+
+
+admin.site.register(Category, CategoryAdmin)

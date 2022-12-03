@@ -3,7 +3,7 @@
 body{
     margin: 0 auto;
     max-width: 1200px;
-    background-color: darkgrey;
+    background-color: #95c5f0;
 }
 header{
     display: flex;
@@ -20,7 +20,7 @@ header{
 }
 .mein{
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
     margin-top: 50px;
 }
 .link{
@@ -39,7 +39,7 @@ header{
     margin-top: 20px;
     margin-bottom: 20px;
     text-decoration: none;
-    color: lemonchiffon;
+    color: black;
 }
 footer{
     display: flex;
