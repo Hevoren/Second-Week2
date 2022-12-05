@@ -16,6 +16,6 @@ urlpatterns = [
     path('myorders/<int:pk>/delete/', views.OrderUserDelete.as_view(), name='order-delete'),
     path('myorders/<int:pk>/delete/', views.OrderAdminDelete.as_view(), name='order-delete'),
     path('admin/', admin.site.urls),
-    path('', CategoryListView.as_view(), name='category-list'),
+    path('category/', CategoryListView.as_view(), name='category-list'),
     path('<str:slug>/', PostByCategoryView.as_view(), name='post-by-category'),
 ]

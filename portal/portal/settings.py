@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'studio.apps.StudioConfig',
+    'mptt',
     'bootstrap4',
     'django_cleanup',
     'easy_thumbnails',

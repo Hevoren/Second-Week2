@@ -15,12 +15,12 @@ from .models import Post, Category
 
 class CategoryListView(ListView):
     model = Category
-    template_name = "blog/category_list.html"
+    template_name = "studio/category_list.html"
 
 
 class PostByCategoryView(ListView):
     context_object_name = 'posts'
-    template_name = 'blog/post_list.html'
+    template_name = 'studio/post_list.html'
 
     def get_queryset(self):
         self.category = Category.objects.get(slug=self.kwargs['slug'])
